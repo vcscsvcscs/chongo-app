@@ -19,7 +19,7 @@ If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommen
 
 ## Development mode
 
-The following command starts the go server and every modification you make in the svelte files are live on it.
+The following command starts the go server on port 8888 and 4443 and every modification you make in the svelte files are live on it.
 
 ```bash
 npm run dev
@@ -34,4 +34,3 @@ npm run build
 ```
 
 You can run the newly built app with `npm run start`.
-
