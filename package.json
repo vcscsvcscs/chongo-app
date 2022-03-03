@@ -5,7 +5,7 @@
   "scripts": {
     "build": "go build -o server && rollup -c",
     "dev": "go run main.go --http ':8888' --https ':4443' && rollup -c -w",
-    "start": "mkdir ./private/logs && ./server --release true"
+    "start": "mkdir -p ./private/logs && ./server --release true"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
