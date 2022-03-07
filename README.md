@@ -11,10 +11,6 @@ Install the dependencies...
 npm install
 ```
 
-```bash
-go mod download
-```
-
 If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) and the official extension [Go](https://open-vsx.org/vscode/item?itemName=golang.Go). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
 
 ## Development mode

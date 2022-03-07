@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prepare":"go mod download",
     "build": "go build -o server && rollup -c",
     "dev": "go run main.go --http ':8888' --https ':4443' && rollup -c -w",
     "start": "mkdir -p ./private/logs && ./server --release true"
