@@ -56,6 +56,7 @@ func main() {
 		log.Println(err)
 		syscall.Exit(101)
 	}
+	go controllers.InnitCredentials(MongoDB, "chongo", "users")
 	go sessionmanager.InnitSessions(15, MongoDB, "chongo", "sessions")
 	//Router and endpoints
 	router := gin.Default()
