@@ -16,7 +16,9 @@ import (
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
+	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
+	"gopkg.in/mgo.v2"
 )
 
 var (
@@ -26,6 +28,8 @@ var (
 	httpPort  = flag.String("http", ":80", "Specify port for http hosting(example for format :80)")
 	release   = flag.Bool("release", false, "Set true to release build")
 )
+
+var MongoDB *mgo.Session
 
 func main() {
 	flag.Parse()
@@ -46,6 +50,13 @@ func main() {
 	}
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.SetOutput(gin.DefaultErrorWriter)
+	var err error
+	MongoDB, err = mgo.Dial("mongodb://127.0.0.1:27017")
+	if err != nil {
+		log.Println(err)
+		syscall.Exit(101)
+	}
+	go sessionmanager.InnitSessions(15, MongoDB, "chongo", "sessions")
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))

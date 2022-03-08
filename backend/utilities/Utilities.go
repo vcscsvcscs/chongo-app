@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/mail"
 	"os"
 )
 
@@ -19,4 +20,10 @@ func Md(str string) string {
 	h := md5.New()
 	io.WriteString(h, str)
 	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+//A simple function, short for the built in mail.parse, this function is redundant but it is comfortable to use i gues.
+func IsEmailValid(email string) bool {
+	_, err := mail.ParseAddress(email)
+	return err == nil
 }
