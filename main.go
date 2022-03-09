@@ -16,6 +16,7 @@ import (
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"gopkg.in/mgo.v2"
@@ -61,7 +62,8 @@ func main() {
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
-
+	router.POST("/register", accounts.Register)
+	router.POST("/login", accounts.Login)
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {
