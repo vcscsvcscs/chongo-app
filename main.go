@@ -64,6 +64,7 @@ func main() {
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 	router.POST("/register", accounts.Register)
 	router.POST("/login", accounts.Login)
+	router.POST("/logout", accounts.Logout)
 	router.DELETE("/deleteaccount", accounts.DeleteAcc)
 	//Server configuration
 	var server *http.Server
