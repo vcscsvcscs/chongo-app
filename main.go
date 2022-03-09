@@ -55,7 +55,7 @@ func main() {
 	MongoDB, err = mgo.Dial("mongodb://127.0.0.1:27017")
 	if err != nil {
 		log.Println(err)
-		syscall.Exit(101)
+		syscall.Exit(503)
 	}
 	go controllers.InnitCredentials(MongoDB, "chongo", "users")
 	go sessionmanager.InnitSessions(15, MongoDB, "chongo", "sessions")
@@ -64,6 +64,7 @@ func main() {
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 	router.POST("/register", accounts.Register)
 	router.POST("/login", accounts.Login)
+	router.DELETE("/deleteaccount", accounts.DeleteAcc)
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {
