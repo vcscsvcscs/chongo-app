@@ -6,6 +6,7 @@
     "prepare": "go mod download",
     "build": "go build -o server.exe && rollup -c",
     "dev": "go build -o server.exe && rollup -c -w",
+    "devserverwin":"server.exe --release true",
     "devserver":"./server.exe --http ':8888' --https '4443'",
     "start": "./server.exe --release true"
   },
