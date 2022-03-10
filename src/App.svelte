@@ -9,7 +9,7 @@
 </script>
 
 <main>
-	<form use:form>
+	<form use:form id="Registration">
 		<h1>
 			Registration
 		</h1>
@@ -44,7 +44,22 @@
 			Submit
 		</button>
 	</form>
-	
+	<form use:form id="Login">
+		<h1>Login</h1>
+		<label for="email">Email</label>
+		<input type="email" name="email" use:validators={[required, email]} />
+		<HintGroup for="email">
+		  <Hint on="required">This is a mandatory field</Hint>
+		  <Hint on="email" hideWhenRequired>Email is not valid</Hint>
+		</HintGroup>
+		<label for="password">Password</label>
+		<input type="password" name="password" use:validators={[required]} />
+		<HintGroup for="password">
+			<Hint on="required">This is a mandatory field</Hint>
+		</HintGroup><br />
+	  
+		<button disabled={!$form.valid}>Login</button>
+	  </form>
 </main>
 
 <style>
@@ -56,7 +71,7 @@
 	}
 
 	h1 {
-		color: #ff3e00;
+		color: #0357f1;
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
