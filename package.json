@@ -6,8 +6,8 @@
     "prepare": "go mod download",
     "build": "go build -o server.exe && rollup -c",
     "dev": "go build -o server.exe && rollup -c -w",
-    "devserver":"./server.exe --http ':8888' --https '4443'",
-    "start": "./server.exe --release true"
+    "devserver":"",
+    "start": ""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
