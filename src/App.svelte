@@ -1,16 +1,14 @@
 <script>
-	export let name;
-	import { useForm, Hint, HintGroup, validators, required, minLength, email } from "svelte-use-form@2.0.0";
+	import { useForm, Hint, HintGroup, validators, required, minLength, email } from "svelte-use-form";
 	import { passwordMatch, containNumbers } from "./customValidators";
 	
 	const form = useForm();
 	
 	const requiredMessage = "This field is required";
+	fetch()
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 	<form use:form>
 		<h1>
 			Registration
@@ -46,6 +44,7 @@
 			Submit
 		</button>
 	</form>
+	
 </main>
 
 <style>
