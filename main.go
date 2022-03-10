@@ -67,15 +67,7 @@ func main() {
 	router.POST("/login", accounts.Login)
 	router.POST("/logout", accounts.Logout)
 	router.DELETE("/deleteaccount", accounts.DeleteAcc)
-	chatserver := chat.Serverstart()
-	go func() {
-		if err := chatserver.Serve(); err != nil {
-			log.Fatalf("socketio listen error: %s\n", err)
-		}
-	}()
-	defer chatserver.Close()
-	router.GET("/chat/*any", gin.WrapH(chatserver))
-	router.POST("/chat/*any", gin.WrapH(chatserver))
+	router.GET("/chat/*any", chat.ChatSocket)
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {

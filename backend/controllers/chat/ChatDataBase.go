@@ -1,9 +1,19 @@
 package chat
 
+import (
+	"github.com/gorilla/websocket"
+	"gopkg.in/mgo.v2"
+)
+
+var ChatIds *mgo.Collection
+var ChatUsers *mgo.Collection
+var Chats *mgo.Collection
+
 type chatMessage struct {
 	Token   string `json:"token" bson:"token"`
 	Content string `json:"msg" bson:"msg"`
 	Id      string `json:"id" bson:"id"`
+	Event   string `json:"event" bson:"event"`
 }
 
 type updateInfo struct {
@@ -36,3 +46,5 @@ type message struct {
 	Name     string `json:"name" bson:"name"`
 	Content  string `json:"msg" bson:"msg"`
 }
+
+var upgrader = websocket.Upgrader{}

@@ -1,34 +1,61 @@
 package chat
 
 import (
-	"encoding/json"
 	"log"
 
-	socketio "github.com/googollee/go-socket.io"
+	"github.com/gin-gonic/gin"
+	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
+	"gopkg.in/mgo.v2/bson"
 )
 
-var server *socketio.Server
+func ChatSocket(c *gin.Context) {
+	var data chatMessage
+	var username string
+	//Upgrade get request to webSocket protocol
+	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		log.Println("There was an error with this connection")
+		ws.Close()
+	}
+	defer ws.Close()
+	/////////////////////////////////////////////////////////////////////////////////
+	//On open
+	err = ws.ReadJSON(&data)
+	if err != nil {
+		//log.Println("error read json")
+		log.Fatal(err)
+	}
+	username = sessionmanager.Users[data.Token]
+	var chatid chatUsers
+	var mychats []chatId
+	iter := ChatUsers.Find(bson.M{"username": username}).Iter()
+	for iter.Next(&chatid) {
+		mychats = append(mychats, chatId{Id: chatid.Id})
+	}
+	for i := 0; i < len(mychats); i++ {
+		iter := ChatUsers.Find(bson.M{"id": mychats[i].Id}).Iter()
+		for iter.Next(&mychats[i]) {
 
-func Serverstart() *socketio.Server {
-	server = socketio.NewServer(nil)
-	server.OnConnect("/", func(s socketio.Conn) error {
-		s.SetContext("") //userdata and stuff
-		log.Println("connected:", s.ID())
-		return nil
-	})
-	server.OnEvent("/", "update", func(s socketio.Conn, uinf string) string {
-		var info updateInfo
-		var update updateInfo
-		json.Unmarshal([]byte(uinf), &info)
-		toreturn, _ := json.Marshal(update)
-		return string(toreturn)
-	})
-	server.OnError("/", func(s socketio.Conn, e error) {
-		log.Println("meet error:", e)
-	})
+		}
+		sessionmanager.Online[Base.Friends[i].ToUsername]
 
-	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
-		log.Println("closed", reason)
-	})
-	return server
+	}
+	/////////////////////////////////////////////////////////////////////////////////
+	for {
+		err = ws.ReadJSON(&data)
+		if err != nil {
+			//log.Println("error read json")
+			break
+		}
+		if data.Token == "close" {
+			break
+		}
+		switch data.Event {
+		case "Msg":
+			///////
+		case "Delete":
+			//////
+		}
+
+	}
 }
