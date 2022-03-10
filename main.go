@@ -17,6 +17,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/chat"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"gopkg.in/mgo.v2"
@@ -66,6 +67,15 @@ func main() {
 	router.POST("/login", accounts.Login)
 	router.POST("/logout", accounts.Logout)
 	router.DELETE("/deleteaccount", accounts.DeleteAcc)
+	chatserver := chat.Serverstart()
+	go func() {
+		if err := chatserver.Serve(); err != nil {
+			log.Fatalf("socketio listen error: %s\n", err)
+		}
+	}()
+	defer chatserver.Close()
+	router.GET("/chat/*any", gin.WrapH(chatserver))
+	router.POST("/chat/*any", gin.WrapH(chatserver))
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {
