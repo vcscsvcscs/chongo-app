@@ -5,7 +5,6 @@
 	const form = useForm();
 	
 	const requiredMessage = "This field is required";
-	fetch()
 </script>
 
 <main>
