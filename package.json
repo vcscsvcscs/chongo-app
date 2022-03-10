@@ -5,8 +5,8 @@
   "scripts": {
     "prepare": "go mod download",
     "build": "go build -o server && rollup -c",
-    "dev": "go run main.go --http ':8888' --https ':4443' && rollup -c -w",
-    "start": "mkdir -p ./private/logs && ./server --release true"
+    "dev": "rollup -c -w",
+    "start": ""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -16,7 +16,8 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "svelte-use-form": "^2.4.3"
   },
   "dependencies": {
     "svelte-routing": "^1.6.0"
