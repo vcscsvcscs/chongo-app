@@ -17,10 +17,19 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'devserver','--'], {
+			var isWin = process.platform === "win32";
+			if(isWin){
+				server = require('child_process').spawn('npm', ['run', 'devserverwin','--'], {
+					stdio: ['ignore', 'inherit', 'inherit'],
+					shell: true
+				});
+			}else{
+				server = require('child_process').spawn('npm', ['run', 'devserver','--'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});
+			}
+			
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
