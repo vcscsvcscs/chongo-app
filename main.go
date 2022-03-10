@@ -35,6 +35,7 @@ func main() {
 		gin.DisableConsoleColor() // Disable Console Color, you don't need console color when writing the logs to file.
 		path := fmt.Sprintf("private/logs/%02dy_%02dm_%02dd_%02dh_%02dm_%02ds.log", time.Now().Year(), time.Now().Month(), time.Now().Day(), time.Now().Hour(), time.Now().Minute(), time.Now().Second())
 		//fmt.Println(path)
+		logerror := os.MkdirAll("private/logs/", 0755)
 		f, logerror := os.Create(path)
 		if logerror != nil {
 			log.Println("Cant log to file")
