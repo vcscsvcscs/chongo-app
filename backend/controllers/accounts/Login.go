@@ -12,6 +12,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+/*A dead simple Login api, which returns an error message or a session token, which is set by the session manager. */
 func Login(c *gin.Context) {
 	var userinfo controllers.User
 	c.BindJSON(&userinfo)

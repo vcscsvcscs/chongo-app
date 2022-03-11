@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//This handler was made so when we only want our users to use https connection.
 func RedirectToHttps(w http.ResponseWriter, r *http.Request) {
 	// Redirect the incoming HTTP request.
 	host := strings.Split(r.Host, ":")[0]

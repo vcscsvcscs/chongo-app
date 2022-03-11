@@ -22,6 +22,7 @@ type Token struct {
 	TimeAccesed int64  `json:"timeaccesed" bson:"timeaccesed"`
 }
 
+//Innitialization of the mongo database, have to set maxage in minute.
 func InnitSessions(maxAge int, mongoDB *mgo.Session, dbname string, collectionname string) {
 	MongoDB = mongoDB
 	Sessions = MongoDB.DB(dbname).C(collectionname)
@@ -32,6 +33,7 @@ func InnitSessions(maxAge int, mongoDB *mgo.Session, dbname string, collectionna
 	SessionCollector()
 }
 
+//Session garbage collector, deletes old invalid sessions and sets users offline.
 func SessionCollector() {
 	for range time.Tick(time.Minute * 15) {
 		var profile Token
@@ -47,6 +49,7 @@ func SessionCollector() {
 	}
 }
 
+//Checks if Session is in the database, and its still valid, it also refreshes the tokens life and sets the user to online state.
 func IsSessionLegit(token string) (Token, bool) {
 	var profile Token
 	legit := Sessions.Find(bson.M{"token": token}).Iter().Next(&profile)
@@ -70,6 +73,7 @@ func SetSessionKeys(ClientIP string, username string) string {
 	return token
 }
 
+//Deletes session token from the database, sets user offline.
 func DeleteSessionKey(token string) bool {
 	if err := Sessions.Remove(bson.M{"token": token}); err != nil {
 		log.Println(err)

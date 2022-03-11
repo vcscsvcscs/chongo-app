@@ -7,6 +7,7 @@ import (
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 )
 
+/*This handle calls the DeleteSession key function, and if there is no error, it returns a succes message.*/
 func Logout(c *gin.Context) {
 	if !sessionmanager.DeleteSessionKey(c.Query("token")) {
 		c.JSON(http.StatusNotFound, gin.H{

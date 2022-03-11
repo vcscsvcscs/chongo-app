@@ -10,6 +10,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+/*
+This handler was made so users can request to delete their data from our database.
+This data will be permanently deleted, 15 days after request.
+*/
 func DeleteAcc(c *gin.Context) {
 	token := c.Query("token")
 	username := sessionmanager.Users[token]
