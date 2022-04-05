@@ -7,7 +7,7 @@
     "build": "go build -o server && rollup -c",
     "dev": "go run main.go --http ':8888' --https ':4443' && rollup -c -w",
     "start": "mkdir -p ./private/logs && ./server --release true",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
