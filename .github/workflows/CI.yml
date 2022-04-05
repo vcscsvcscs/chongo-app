@@ -27,5 +27,5 @@ jobs:
       run: |
           npm install
           npm run prepare
-          npm test
+          npm test --passWithNoTests
           go test -v ../
