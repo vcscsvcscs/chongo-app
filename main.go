@@ -60,12 +60,13 @@ func main() {
 
 	sessionManager := sessionmanager.InitSessions(15, MongoDB, "chongo", "sessions", utilities.NormalClock{})
 
-	go controllers.InnitCredentials(MongoDB, "chongo", "users")
+	userRepo := accounts.NewUserRepo(MongoDB.DB("chongo").C("users"))
+	controllers.InitCredentials(userRepo)
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 
-	acc := accounts.NewAccounts(sessionManager)
+	acc := accounts.NewAccounts(sessionManager, userRepo)
 	router.POST("/register", acc.Register)
 	router.POST("/login", acc.Login)
 	router.POST("/logout", acc.Logout)

@@ -2,29 +2,27 @@ package accounts
 
 import (
 	"fmt"
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/model"
 	"net/http"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
-	"github.com/vcscsvcscs/chongo-app/backend/controllers"
 	"golang.org/x/crypto/bcrypt"
-	"gopkg.in/mgo.v2/bson"
 )
 
 /*A dead simple Login api, which returns an error message or a session token, which is set by the session manager. */
 func (a *Accounts) Login(c *gin.Context) {
-	var userinfo controllers.User
+	var userinfo model.User
 	c.BindJSON(&userinfo)
 	//log.Println()
 	userinfo.Email = template.HTMLEscapeString(userinfo.Email)
 	userinfo.Password = template.HTMLEscapeString(userinfo.Password)
-	var user controllers.User
-	iter := controllers.Users.Find(bson.M{"email": userinfo.Email}).Iter()
-	if !iter.Next(&user) {
+	var user model.User
+
+	if !a.db.FindByEmail(userinfo.Email, &user) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "No user with this email.",
 		})
-		c.Abort()
 		return
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userinfo.Password)); err != nil {

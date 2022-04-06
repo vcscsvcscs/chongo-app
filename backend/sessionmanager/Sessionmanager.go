@@ -36,6 +36,7 @@ func InitSessions(maxAge int, mongoDB *mgo.Session, dbName, collectionName strin
 		maxAge:   time.Minute,
 		users:    make(map[string]string),
 		online:   make(map[string]bool),
+		clock:    clock,
 	}
 
 	for i := 1; i < maxAge; i++ {
@@ -45,6 +46,17 @@ func InitSessions(maxAge int, mongoDB *mgo.Session, dbName, collectionName strin
 	go sm.sessionCollector()
 
 	return sm
+}
+
+// Mock for tests
+func InitMockSessions(db SessionsDB, clock utilities.Clock) SessionManager {
+	return SessionManager{
+		sessions: db,
+		maxAge:   time.Minute,
+		users:    make(map[string]string),
+		online:   make(map[string]bool),
+		clock:    clock,
+	}
 }
 
 //Session garbage collector, deletes old invalid sessions and sets users offline.

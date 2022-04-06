@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/mocks"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
-	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	utilMocks "github.com/vcscsvcscs/chongo-app/backend/utilities/mocks"
 	"testing"
 	"time"
@@ -43,16 +42,6 @@ func InitSessionManagerTestSetup(t *testing.T) *SessionManagerTestSetup {
 		sm:    InitMockSessions(db, clock),
 		db:    db,
 		clock: clock,
-	}
-}
-
-func InitMockSessions(db SessionsDB, clock utilities.Clock) SessionManager {
-	return SessionManager{
-		sessions: db,
-		maxAge:   time.Minute,
-		users:    make(map[string]string),
-		online:   make(map[string]bool),
-		clock:    clock,
 	}
 }
 

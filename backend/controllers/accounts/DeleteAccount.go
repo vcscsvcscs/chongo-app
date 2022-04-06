@@ -5,8 +5,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/vcscsvcscs/chongo-app/backend/controllers"
-	"gopkg.in/mgo.v2/bson"
 )
 
 /*
@@ -24,7 +22,7 @@ func (a *Accounts) DeleteAcc(c *gin.Context) {
 		return
 	}
 
-	err := controllers.Users.Update(bson.M{"username": username}, bson.M{"$set": bson.M{"deleted": time.Now().Unix()}})
+	err := a.db.Update(username, time.Now())
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There was a problem with deleting your account, please try again and sry for your incovinience.",

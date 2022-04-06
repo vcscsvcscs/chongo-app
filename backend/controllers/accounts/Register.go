@@ -1,20 +1,19 @@
 package accounts
 
 import (
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/model"
 	"log"
 	"net/http"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
-	"github.com/vcscsvcscs/chongo-app/backend/controllers"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"golang.org/x/crypto/bcrypt"
-	"gopkg.in/mgo.v2/bson"
 )
 
 //This function registers a new document in the database with the new users data. It can return multiple types of error messages or at succesful registration session token.
 func (a *Accounts) Register(c *gin.Context) {
-	var userinfo controllers.User
+	var userinfo model.User
 	log.Println(c.BindJSON(&userinfo))
 	userinfo.Name = template.HTMLEscapeString(userinfo.Name)
 	userinfo.Username = template.HTMLEscapeString(userinfo.Username)
@@ -27,17 +26,16 @@ func (a *Accounts) Register(c *gin.Context) {
 		return
 	}
 	userinfo.Email = template.HTMLEscapeString(userinfo.Email)
-	var user controllers.User
-	iter := controllers.Users.Find(bson.M{"email": userinfo.Email}).Iter()
-	if iter.Next(&user) {
+	var user model.User
+	if a.db.FindByEmail(userinfo.Email, &user) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There is already a user with this email.",
 		})
 		c.Abort()
 		return
 	}
-	iter = controllers.Users.Find(bson.M{"username": userinfo.Username}).Iter()
-	if iter.Next(&user) {
+
+	if a.db.FindByUserName(userinfo.Username, &user) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There is already a user with this username.",
 		})
@@ -57,7 +55,7 @@ func (a *Accounts) Register(c *gin.Context) {
 	userinfo.Password = string(hash)
 	userinfo.Ip = c.ClientIP()
 	userinfo.DeletedAccount = 0
-	if err := controllers.Users.Insert(&userinfo); err != nil {
+	if err := a.db.Insert(&user); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There was an error with our database, please try again, sry for the incovinience.",
 		})
