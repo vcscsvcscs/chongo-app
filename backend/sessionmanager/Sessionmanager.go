@@ -77,14 +77,14 @@ func (sm *SessionManager) IsSessionLegit(token string) (model.Token, bool) {
 }
 
 //This is the function which generates a token and returns it, The token is automaticaly added to the connected mongoDB and it is added to the local cache.
-func (sm *SessionManager) SetSessionKeys(ClientIP string, username string) string {
+func (sm *SessionManager) SetSessionKeys(ClientIP string, username string) (string, error) {
 	token := utilities.Md(fmt.Sprint(ClientIP, sm.clock.Now()))
 	sm.users[token] = username
 	sm.online[username] = true
 	if err := sm.sessions.Insert(token, username, sm.clock.Now()); err != nil {
-		log.Println(err)
+		return "", err
 	}
-	return token
+	return token, nil
 }
 
 //Deletes session token from the database, sets user offline.

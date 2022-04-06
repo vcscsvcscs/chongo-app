@@ -41,7 +41,14 @@ func (a *Accounts) Login(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	token := a.sessionManager.SetSessionKeys(c.ClientIP(), user.Username)
+	token, err := a.sessionManager.SetSessionKeys(c.ClientIP(), user.Username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Internal server error.",
+		})
+		c.Abort()
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User Sign In successfully", "token": token,

@@ -65,7 +65,15 @@ func (a *Accounts) Register(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	token := a.sessionManager.SetSessionKeys(c.ClientIP(), userinfo.Username)
+	token, err := a.sessionManager.SetSessionKeys(c.ClientIP(), userinfo.Username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Internal server error.",
+		})
+		c.Abort()
+		return
+	}
+
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User Registration successfull", "token": token,
 	})

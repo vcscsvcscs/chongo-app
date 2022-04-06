@@ -1,6 +1,7 @@
 package sessionmanager
 
 import (
+	"errors"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/mocks"
@@ -66,11 +67,29 @@ func TestSessionManager_SetSessionKeys(t *testing.T) {
 		setup.db.EXPECT().Insert(gomock.Any(), userName, currentTime).Times(1)
 
 		// When
-		token := setup.sm.SetSessionKeys("1.1.1.1", userName)
+		token, err := setup.sm.SetSessionKeys("1.1.1.1", userName)
 
 		// Then
+		assert.NoError(t, err)
 		assert.NotEmpty(t, token)
 		assert.Equal(t, userName, setup.sm.GetUser(token))
+	})
+
+	t.Run("error setting session keys", func(t *testing.T) {
+		// Given
+		currentTime := time.Now()
+		userName := "randomUserName123"
+
+		setup := InitSessionManagerTestSetup(t)
+		setup.clock.EXPECT().Now().Return(currentTime).AnyTimes()
+		setup.db.EXPECT().Insert(gomock.Any(), userName, currentTime).Times(1).Return(errors.New("random error"))
+
+		// When
+		token, err := setup.sm.SetSessionKeys("1.1.1.1", userName)
+
+		// Then
+		assert.Error(t, err)
+		assert.Empty(t, token)
 	})
 }
 
