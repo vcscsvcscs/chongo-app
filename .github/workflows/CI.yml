@@ -28,4 +28,4 @@ jobs:
           npm install
           npm run prepare
           npm test
-          go test -v
+          go test -v ./...
