@@ -7,13 +7,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
-	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 )
 
 /*A dead simple Login api, which returns an error message or a session token, which is set by the session manager. */
-func Login(c *gin.Context) {
+func (a *Accounts) Login(c *gin.Context) {
 	var userinfo controllers.User
 	c.BindJSON(&userinfo)
 	//log.Println()
@@ -42,7 +41,7 @@ func Login(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	token := sessionmanager.SetSessionKeys(c.ClientIP(), user.Username)
+	token := a.sessionManager.SetSessionKeys(c.ClientIP(), user.Username)
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User Sign In successfully", "token": token,

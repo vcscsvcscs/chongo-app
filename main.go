@@ -57,15 +57,19 @@ func main() {
 		log.Println(err)
 		syscall.Exit(503)
 	}
+
+	sessionManager := sessionmanager.InitSessions(15, MongoDB, "chongo", "sessions", utilities.NormalClock{})
+
 	go controllers.InnitCredentials(MongoDB, "chongo", "users")
-	go sessionmanager.InnitSessions(15, MongoDB, "chongo", "sessions")
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
-	router.POST("/register", accounts.Register)
-	router.POST("/login", accounts.Login)
-	router.POST("/logout", accounts.Logout)
-	router.DELETE("/deleteaccount", accounts.DeleteAcc)
+
+	acc := accounts.NewAccounts(sessionManager)
+	router.POST("/register", acc.Register)
+	router.POST("/login", acc.Login)
+	router.POST("/logout", acc.Logout)
+	router.DELETE("/deleteaccount", acc.DeleteAcc)
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {

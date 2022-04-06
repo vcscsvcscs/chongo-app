@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
-	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -14,11 +13,11 @@ import (
 This handler was made so users can request to delete their data from our database.
 This data will be permanently deleted, 15 days after request.
 */
-func DeleteAcc(c *gin.Context) {
+func (a *Accounts) DeleteAcc(c *gin.Context) {
 	token := c.Query("token")
-	username := sessionmanager.Users[token]
+	username := a.sessionManager.GetUser(token)
 
-	if !sessionmanager.DeleteSessionKey(token) {
+	if !a.sessionManager.DeleteSessionKey(token) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There was a problem with deleting your account, please try again and sry for your incovinience.",
 		})

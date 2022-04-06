@@ -7,14 +7,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
-	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 )
 
 //This function registers a new document in the database with the new users data. It can return multiple types of error messages or at succesful registration session token.
-func Register(c *gin.Context) {
+func (a *Accounts) Register(c *gin.Context) {
 	var userinfo controllers.User
 	log.Println(c.BindJSON(&userinfo))
 	userinfo.Name = template.HTMLEscapeString(userinfo.Name)
@@ -66,7 +65,7 @@ func Register(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	token := sessionmanager.SetSessionKeys(c.ClientIP(), userinfo.Username)
+	token := a.sessionManager.SetSessionKeys(c.ClientIP(), userinfo.Username)
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User Registration successfull", "token": token,
 	})
