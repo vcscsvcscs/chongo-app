@@ -1,10 +1,11 @@
 package sessionmanager
 
 import (
+	"time"
+
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"time"
 )
 
 type SessionRepo struct {

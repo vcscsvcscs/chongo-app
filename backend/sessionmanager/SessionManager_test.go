@@ -2,13 +2,14 @@ package sessionmanager
 
 import (
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/mocks"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
 	utilMocks "github.com/vcscsvcscs/chongo-app/backend/utilities/mocks"
-	"testing"
-	"time"
 )
 
 type SessionManagerTestSetup struct {
