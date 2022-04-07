@@ -6,14 +6,9 @@
     "prepare": "go mod download",
     "build": "go build -o server.exe && rollup -c",
     "dev": "go build -o server.exe && rollup -c -w",
-<<<<<<< HEAD
-    "devserver":"",
-    "start": ""
-=======
     "devserverwin":"server.exe --release true",
     "devserver":"./server.exe --http ':8888' --https '4443'",
     "start": "./server.exe --release true"
->>>>>>> feature-login-register-ui
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
