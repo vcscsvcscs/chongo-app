@@ -5,36 +5,21 @@
 	const form = useForm();
 </script>
 
-<form use:form class="LogReg" in:fade out:fade>
-    <h1>Login</h1>
-    <label for="email">Email</label>
-    <input type="email" name="email" use:validators={[required, email]} />
+<form use:form in:fade out:fade>
+    <h1 class="display-6 text-center">Chongo</h1>
+    <div style="text-align: center;"><img src="assets/img/logo.png" style="width: 100px;height: 100px;margin-right: auto;margin-left: auto;" alt="Logo of the chongo app family">
+        <p id="Error" style="color: rgb(242,11,11);display: none;font-size: 10px;">Paragraph</p>
+    </div>
+    <div class="mb-3"><input placeholder="Email" class="form-control" type="email" name="email" use:validators={[required, email]} /></div>
     <HintGroup for="email">
     <Hint on="required">This is a mandatory field</Hint>
     <Hint on="email" hideWhenRequired>Email is not valid</Hint>
     </HintGroup>
-    <label for="password">Password</label>
-    <input type="password" name="password" use:validators={[required]} />
+    <div class="mb-3"><input placeholder="Password" class="form-control" type="password" name="password" use:validators={[required]} /></div>
     <HintGroup for="password">
         <Hint on="required">This is a mandatory field</Hint>
     </HintGroup><br />
-
-    <button disabled={!$form.valid}>Login</button>
+    <div class="mb-3"><button disabled={!$form.valid} class="btn btn-primary d-block w-100" style="background: #60c659;">Login</button></div>
 </form>
 <style>
-h1 {
-    color: #0357f1;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-    margin:0px !important;
-}
-.LogReg{
-    margin: auto;
-    width: 100%;
-
-}
-form{
-		color: aliceblue;
-	}
 </style>
