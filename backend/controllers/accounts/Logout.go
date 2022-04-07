@@ -13,6 +13,7 @@ func (a *Accounts) Logout(c *gin.Context) {
 			"message": "There was a problem with logout, please try again and sry for your incovinience.",
 		})
 		c.Abort()
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User Sign out successfully",
