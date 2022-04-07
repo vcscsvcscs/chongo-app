@@ -50,7 +50,9 @@ func main() {
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
-
+	router.NoRoute(func(c *gin.Context) {
+		c.File("./public/index.html")
+	})
 	//Server configuration
 	var server *http.Server
 	if utilities.Exists(*cert) && utilities.Exists(*key) {
