@@ -1,5 +1,6 @@
 /node_modules/
 /public/build/
+/public/assets/bootstrap/
 /private/keys/
 /private/logs/
 
@@ -7,5 +8,4 @@
 server
 package-lock.json
 server.exe
-package.json
 package.json
