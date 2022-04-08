@@ -8,55 +8,37 @@
 	const requiredMessage = "This field is required";
 </script>
 
-<form use:form class="LogReg" in:fade out:fade>
-    <h1>
-        Registration
-    </h1>
-    <label for="email">Email</label>
-    <input type="email" name="email" use:validators={[required, email]} />
+<form use:form class="LogReg" in:fade >
+    <h1 class="display-6 text-center">Chongo</h1>
+    <div style="text-align: center;"><img src="assets/img/logo.png" style="width: 100px;height: 100px;margin-right: auto;margin-left: auto;" alt="Logo of the chongo app family">
+        <p id="Error" style="color: rgb(242,11,11);display: none;font-size: 10px;">Paragraph</p>
+    </div>
+    <div class="mb-3"><input placeholder="Email" class="form-control" type="email" name="email" use:validators={[required, email]} /></div>
     <HintGroup for="email">
-        <Hint on="required">{requiredMessage}</Hint>
-        <Hint on="email" hideWhenRequired>This must be a valid email</Hint>	
+        <Hint on="required">This is a mandatory field</Hint>
+        <Hint on="email" hideWhenRequired>Email is not valid</Hint>
     </HintGroup>
 
-    <label for="name">Name</label>
-    <input type="text" name="name"  />
+    <div class="mb-3"><input placeholder="Name" class="form-control" type="text" name="name" use:validators={[required]} /></div>
+    <HintGroup for="name">
+        <Hint on="required">This is a mandatory field</Hint>
+    </HintGroup>
 
-    <label for="password">Password</label>
-    <input type="password" name="password" use:validators={[required, minLength(5), containNumbers(2)]} />
+    <div class="mb-3"><input placeholder="Password" class="form-control" type="password" name="password" use:validators={[required, minLength(5), containNumbers(2)]} /></div>
     <HintGroup for="password">
-        <Hint on="required">{requiredMessage}</Hint>
+        <Hint on="required">This is a mandatory field</Hint>
         <Hint on="minLength" hideWhenRequired let:value>This field must have at least {value} characters.</Hint>	
         <Hint on="containNumbers" hideWhen="minLength" let:value>
             This field must contain at least {value} numbers.
         </Hint>	
     </HintGroup>
 
-    <label for="passwordConfirmation">Password Confirmation</label>
-    <input type="password" name="passwordConfirmation" use:validators={[required, passwordMatch]} />
+    <div class="mb-3"><input placeholder="Password Confirmation" class="form-control" type="password" name="passwordConfirmation" use:validators={[required, passwordMatch]} /></div>
     <HintGroup for="passwordConfirmation">
-        <Hint on="required">{requiredMessage}</Hint>
+        <Hint on="required">This is a mandatory field</Hint>
         <Hint on="passwordMatch" hideWhenRequired>Passwords do not match</Hint>	
-    </HintGroup><br />
+    </HintGroup>
 
-    <button disabled={!$form.valid} on:click|preventDefault>
-        Submit
-    </button>
+    <div class="mb-3"><button disabled={!$form.valid} class="btn btn-primary d-block w-100" style="background: #60c659;">Register</button></div>
 </form>
-<style>
-    h1 {
-        color: #0357f1;
-        text-transform: uppercase;
-        font-size: 4em;
-        font-weight: 100;
-        margin:0px !important;
-    }
-    .LogReg{
-        margin: auto;
-        width: 100%;
-    
-    }
-    form{
-            color: aliceblue;
-        }
-    </style>
+<style></style>
