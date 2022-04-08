@@ -1,13 +1,16 @@
 <script>
 	import Login from "../components/LogReg/Login.svelte";
 	import Register from "../components/LogReg/Register.svelte";
-	const requiredMessage = "This field is required";
 	let change = "Registration";
 	let login = true;
 	function handleClick(event) {
 		login = !login;
-		if (login == true) change = "Registration";
-		else change = "Login";
+		if (login == true){ 
+			change = "Registration";
+		}
+		else {
+			change = "Login";
+		}
 	}
 </script>
 
@@ -20,7 +23,6 @@
 	{:else}
 		<Register />
 	{/if}
-	<button id="changer" on:click={handleClick} class="btn btn-primary d-block"
-		>{change}</button
-	>
+	<button on:click={handleClick} class="{login ? 'btn btn-primary d-block changer':'btn btn-primary d-block changer1'}"
+		>{change}</button>
 </section>
