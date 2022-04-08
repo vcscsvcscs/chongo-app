@@ -1,6 +1,8 @@
 /node_modules/
 /public/build/
 /public/assets/bootstrap/
+/public/assets/bootstrap/css/
+/public/assets/bootstrap/js/
 /private/keys/
 /private/logs/
 
