@@ -18,8 +18,8 @@
     <div class="mb-3"><input placeholder="Password" class="form-control" type="password" name="password" use:validators={[required]} /></div>
     <HintGroup for="password">
         <Hint on="required">This is a mandatory field</Hint>
-    </HintGroup><br />
-    <div class="mb-3"><button disabled={!$form.valid} class="btn btn-primary d-block w-100" style="background: #60c659;">Login</button></div>
+    </HintGroup>
+    <button disabled={!$form.valid} class="btn btn-primary d-block w-100" style="background: #60c659; margin-bottom:0px !important;">Login</button>
 </form>
 <style>
 </style>

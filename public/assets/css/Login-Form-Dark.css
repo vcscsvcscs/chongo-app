@@ -5,19 +5,28 @@
     flex: auto;
   background-size: cover, auto;
 }
-#changer {
+.changer {
   max-width: 240px;
-  width: 80%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
   align-items: center;
-  transform: translate(0%, 55%);
+  transform: translate(0%, 35%);
+}
+.changer1{
+  max-width: 240px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+ transform: translate(0%, 80%) !important;
 }
 .login-dark form {
   max-width: 320px;
   width: 90%;
   background-color: #1e2833;
   padding: 40px;
+  padding-bottom: 60px !important;
   margin-left: auto;
   margin-right: auto;
   border-radius: 4px;
