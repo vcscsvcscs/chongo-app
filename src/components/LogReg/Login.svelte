@@ -5,7 +5,7 @@
 	const form = useForm();
 </script>
 
-<form use:form in:fade out:fade>
+<form use:form in:fade>
     <h1 class="display-6 text-center">Chongo</h1>
     <div style="text-align: center;"><img src="assets/img/logo.png" style="width: 100px;height: 100px;margin-right: auto;margin-left: auto;" alt="Logo of the chongo app family">
         <p id="Error" style="color: rgb(242,11,11);display: none;font-size: 10px;">Paragraph</p>
