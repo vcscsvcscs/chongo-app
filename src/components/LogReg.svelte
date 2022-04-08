@@ -1,6 +1,11 @@
 <script>
 	import Login from "../components/LogReg/Login.svelte";
 	import Register from "../components/LogReg/Register.svelte";
+	import {UserLogedin} from "../Authenticate"
+	const baseUrl = window.location.origin;
+	if(UserLogedin()){
+		window.location.href = baseUrl + "/home";
+	};
 	let change = "Registration";
 	let login = true;
 	function handleClick(event) {
@@ -23,6 +28,6 @@
 	{:else}
 		<Register />
 	{/if}
-	<button on:click={handleClick} class="{login ? 'btn btn-primary d-block changer':'btn btn-primary d-block changer1'}"
+	<button type="button" on:click={handleClick} class="{login ? 'btn btn-primary d-block changer':'btn btn-primary d-block changer1'}"
 		>{change}</button>
 </section>

@@ -11,7 +11,7 @@
   margin-left: auto;
   margin-right: auto;
   align-items: center;
-  transform: translate(0%, 35%);
+  transform: translate(0%, 15%);
 }
 .changer1{
   max-width: 240px;
@@ -19,14 +19,14 @@
   margin-left: auto;
   margin-right: auto;
   align-items: center;
- transform: translate(0%, 80%) !important;
+ transform: translate(0%, 55%) !important;
 }
 .login-dark form {
   max-width: 320px;
   width: 90%;
   background-color: #1e2833;
   padding: 40px;
-  padding-bottom: 60px !important;
+  padding-bottom: 80px !important;
   margin-left: auto;
   margin-right: auto;
   border-radius: 4px;
@@ -50,6 +50,7 @@
   box-shadow: none;
   outline: none;
   color: inherit;
+  padding-left: 15px;
 }
 
 .login-dark form .btn-primary {
