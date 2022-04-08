@@ -11,3 +11,5 @@ server
 package-lock.json
 server.exe
 package.json
+public/assets/bootstrap/css/bootstrap.min.css
+public/assets/bootstrap/js/bootstrap.min.js
