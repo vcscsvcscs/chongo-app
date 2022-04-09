@@ -10,38 +10,13 @@
     } from "svelte-use-form";
     import { passwordMatch, containNumbers } from "../../customValidators";
     import { fade } from "svelte/transition";
-
+    import {Register} from "../../Authenticate"
     const form = useForm();
-    const baseUrl = window.location.origin;
     let errormsg = "";
     let password = "";
     let mail = "";
     let username = "";
     let name = "";
-    function register() {
-        let data = {
-            email: mail,
-            password: password,
-            username: username,
-            name: name,
-        };
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", baseUrl + "/login", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = function () {
-            if (this.readyState != 4) return;
-            if (this.status == 200) {
-                data = JSON.parse(this.responseText);
-                window.sessionStorage.setItem("sessiontoken", data.token);
-                window.location.href = baseUrl + "/home";
-            } else {
-                data = JSON.parse(this.responseText);
-                errormsg = data.message;
-            }
-            // end of state change: it can be after some time (async)
-        };
-        xhr.send(JSON.stringify(data));
-    }
 </script>
 
 <form use:form class="LogReg" in:fade>
@@ -57,7 +32,7 @@
                 id="Error"
                 style="color: rgb(242,11,11);display: none;font-size: 10px;"
             >
-                Paragraph
+                {errormsg}
             </p>
         {/if}
     </div>
@@ -136,11 +111,11 @@
         <Hint on="passwordMatch" hideWhenRequired>Passwords do not match</Hint>
     </HintGroup>
     <button
-        on:click={register()}
         type="button"
         disabled={!$form.valid}
         class="btn btn-primary d-block w-100"
         style="background: #60c659;margin-bottom:0px !important;"
+        on:click="{errormsg = Register(name,username,mail,password)}"
         >Register</button
     >
 </form>

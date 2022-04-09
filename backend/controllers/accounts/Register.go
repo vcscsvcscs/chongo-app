@@ -1,10 +1,11 @@
 package accounts
 
 import (
-	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/model"
 	"log"
 	"net/http"
 	"text/template"
+
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
@@ -14,7 +15,7 @@ import (
 //This function registers a new document in the database with the new users data. It can return multiple types of error messages or at succesful registration session token.
 func (a *Accounts) Register(c *gin.Context) {
 	var userinfo model.User
-	log.Println(c.BindJSON(&userinfo))
+	//log.Println(c.BindJSON(&userinfo))
 	userinfo.Name = template.HTMLEscapeString(userinfo.Name)
 	userinfo.Username = template.HTMLEscapeString(userinfo.Username)
 	userinfo.Password = template.HTMLEscapeString(userinfo.Password)
@@ -55,7 +56,7 @@ func (a *Accounts) Register(c *gin.Context) {
 	userinfo.Password = string(hash)
 	userinfo.Ip = c.ClientIP()
 	userinfo.DeletedAccount = 0
-	if err := a.db.Insert(&user); err != nil {
+	if err := a.db.Insert(&userinfo); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There was an error with our database, please try again, sry for the incovinience.",
 		})

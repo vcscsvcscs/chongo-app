@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
 	"log"
 	"time"
+
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
 )
 
 type Database struct {
 	users accounts.UsersDB
 }
 
-//this function should always be started with go routin. Innitializes database informations and starts the deleted account collection.
 func InitCredentials(usersDB accounts.UsersDB) Database {
 	db := Database{
 		users: usersDB,

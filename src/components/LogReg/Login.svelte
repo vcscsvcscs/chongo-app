@@ -13,26 +13,7 @@
     const form = useForm();
     let errormsg = "";
     let password = "";
-    let mail = "";
-    function login() {
-        let data = { email: mail, password: password };
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", baseUrl + "/login", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = function () {
-            if (this.readyState != 4) return;
-            if (this.status == 200) {
-                data = JSON.parse(this.responseText);
-                window.sessionStorage.setItem("sessiontoken", data.token);
-                window.location.href = baseUrl + "/home";
-            } else {
-                data = JSON.parse(this.responseText);
-                errormsg = data.message;
-            }
-            // end of state change: it can be after some time (async)
-        };
-        xhr.send(JSON.stringify(data));
-    }
+    let mail = ""; 
 </script>
 
 <form use:form in:fade>
@@ -78,7 +59,25 @@
     </HintGroup>
     <button
         type="button"
-        on:click={login}
+        on:click="{()=>{
+            let data = { email: mail, password: password };
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", baseUrl + "/login", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+                if (this.status == 200) {
+                    data = JSON.parse(this.responseText);
+                    window.sessionStorage.setItem("sessiontoken", data.token);
+                    window.location.href = baseUrl + "/home";
+                } else {
+                    data = JSON.parse(this.responseText);
+                    errormsg = data.message;
+                }
+                // end of state change: it can be after some time (async)
+            };
+            xhr.send(JSON.stringify(data));
+        }}"
         disabled={!$form.valid}
         class="btn btn-primary d-block w-100"
         style="background: #60c659; margin-bottom:0px !important;">Login</button
