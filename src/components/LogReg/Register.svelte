@@ -86,7 +86,7 @@
         />
     </div>
     <HintGroup for="name">
-        <Hint on="required">{requiredMessage}</Hint>
+        <Hint on="required">This is a mandatory field</Hint>
         <Hint on="minLength" hideWhenRequired let:value>This field must have at least {value} characters.</Hint>
     </HintGroup>
     <div class="mb-3">
