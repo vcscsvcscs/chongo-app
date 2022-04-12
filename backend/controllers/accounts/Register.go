@@ -35,7 +35,6 @@ func (a *Accounts) Register(c *gin.Context) {
 		c.Abort()
 		return
 	}
-
 	if a.db.FindByUserName(userinfo.Username, &user) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "There is already a user with this username.",

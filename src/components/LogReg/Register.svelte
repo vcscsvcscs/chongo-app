@@ -9,8 +9,8 @@
         email,
     } from "svelte-use-form";
     import { passwordMatch, containNumbers } from "../../customValidators";
+    import {xhr} from "../../Authenticate";
     import { fade } from "svelte/transition";
-    import {Register} from "../../Authenticate"
     const form = useForm();
     let errormsg = "";
     let password = "";
@@ -123,7 +123,6 @@
             email: mail,
             password: password,
         };
-        let xhr = new XMLHttpRequest();
         xhr.open("POST", baseUrl + "/register", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {

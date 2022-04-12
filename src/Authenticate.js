@@ -7,3 +7,4 @@ export function UserLogedin() {
         return sessiontoken;
     }
 }
+export const xhr = new XMLHttpRequest();

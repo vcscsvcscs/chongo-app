@@ -9,6 +9,7 @@
         email,
     } from "svelte-use-form";
     import { fade } from "svelte/transition";
+    import {xhr} from "../../Authenticate";
     const baseUrl = window.location.origin;
     const form = useForm();
     let errormsg = "";
@@ -61,7 +62,6 @@
         type="button"
         on:click="{()=>{
             let data = { email: mail, password: password };
-            let xhr = new XMLHttpRequest();
             xhr.open("POST", baseUrl + "/login", true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function () {

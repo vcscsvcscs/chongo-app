@@ -19,7 +19,6 @@
 	}
 </script>
 <link rel="icon" type="image/png" sizes="500x500" href="assets/img/logo.png" />
-<link rel="stylesheet" href="assets/css/styles.css" />
 <link rel="stylesheet" href="assets/css/Login-Form-Dark.css" />
 <section class="login-dark">
 	{#if loginer}
