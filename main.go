@@ -72,6 +72,7 @@ func main() {
 	router.POST("/login", acc.Login)
 	router.POST("/logout", acc.Logout)
 	router.DELETE("/deleteaccount", acc.DeleteAcc)
+	router.GET("/sync", controllers.MainSocket)
 	router.NoRoute(func(c *gin.Context) {
 		c.File("./public/index.html")
 	})

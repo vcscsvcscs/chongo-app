@@ -2,21 +2,20 @@
     import { onMount } from "svelte";
     import { Link } from 'svelte-routing';
     import {mainsocket} from '../socketcom'
+    import {UserLogedin} from '../Authenticate'
     import Dashboard from "../components/Home/Dashboard.svelte";
     import Chat from "../components/Home/Chat.svelte";
     import Discover from "../components/Home/Discover.svelte";
     import Pagetopbutton from "../components/Pagetopbutton.svelte"; 
     let switchmenu = "dashboard";
-    /*onMount(() => {
-        //start fetching data from server.
-        $mainsocket = {};
+    onMount(()=>{
+        $mainsocket = {"token":(UserLogedin()?UserLogedin():"close"),"contents":[],"types":[]};
     });
-   
     mainsocket.subscribe(
-        value => {
-
+        (value) => {
+            console.log(value);
         }
-    );*/
+    );
 </script>
 
 <link rel="stylesheet" href="assets/css/styles.css" />
@@ -38,14 +37,14 @@
             <hr class="sidebar-divider my-0" />
             <ul class="navbar-nav text-light" id="accordionSidebar">
                 <li class="nav-item">
-                    <button class="nav-link active" on:click="{switchmenu = 'dashboard'}"
+                    <button class="nav-link active" on:click="{()=>{switchmenu = 'dashboard'}}"
                         ><i class="fas fa-tachometer-alt" /><span
                             >Dashboard</span
                         ></button
                     >
                 </li>
-                <li class="nav-item"><button on:click="{switchmenu = 'discover'}" type="button" class="nav-link"><i class="fas fa-table"></i><span>Discover</span></button></li>
-                <li class="nav-item"><button type="button" class="nav-link" on:click="{switchmenu = 'chat'}"><i class="fa fa-wechat" /><span>Chat</span></button></li>
+                <li class="nav-item"><button on:click="{()=>{switchmenu = 'discover'}}" type="button" class="nav-link"><i class="fas fa-table"></i><span>Discover</span></button></li>
+                <li class="nav-item"><button type="button" class="nav-link" on:click="{()=>{switchmenu = 'chat'}}"><i class="fa fa-wechat" /><span>Chat</span></button></li>
             </ul>
             <div class="text-center d-none d-md-inline">
                 <button

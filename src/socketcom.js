@@ -1,10 +1,4 @@
 import websocketStore from "svelte-websocket-store";
-console.log()
+console.log("ws:"+document.location.host+"/sync")
 const initialValue = { };
-export const mainsocket = websocketStore("wss:"+document.location.host+"", initialValue);
-
-// send JSON to websocket server
-//$myStore = { content: "to be saved", other_values: "all" };
-
-// receive JSON from server (push)
-//let response = $myStore;
+export const mainsocket = websocketStore(("ws://"+document.location.host+"/sync"), initialValue);
