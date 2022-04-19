@@ -1,10 +1,11 @@
 package accounts
 
 import (
+	"time"
+
 	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/model"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"time"
 )
 
 type UserRepo struct {
@@ -26,7 +27,7 @@ func (u UserRepo) FindByEmail(email string, user *model.User) bool {
 
 func (u UserRepo) FindByUserName(userName string, user *model.User) bool {
 	iter := u.db.Find(bson.M{"username": userName}).Iter()
-	if iter.Next(&user) {
+	if !iter.Next(&user) {
 		return false
 	}
 

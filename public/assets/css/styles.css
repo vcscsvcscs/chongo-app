@@ -1,0 +1,11 @@
+#wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+.bg-gradient-primary {
+    background-color: rgb(27, 58, 149);
+    background-image: linear-gradient(rgb(27, 58, 149) 10%, rgb(27, 59, 152) 100%);
+}

@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import copy from 'rollup-plugin-copy';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -17,10 +18,19 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+			var isWin = process.platform === "win32";
+			if(isWin){
+				server = require('child_process').spawn('npm', ['run', 'devserverwin','--'], {
+					stdio: ['ignore', 'inherit', 'inherit'],
+					shell: true
+				});
+			}else{
+				server = require('child_process').spawn('npm', ['run', 'devserver','--'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});
+			}
+			
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
@@ -46,7 +56,12 @@ export default {
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
-
+		copy({
+            targets: [{ 
+                src: 'node_modules/bootstrap/dist/**/*', 
+                dest: 'public/assets/bootstrap' 
+            }]
+        }),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
