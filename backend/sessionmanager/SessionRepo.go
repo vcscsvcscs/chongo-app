@@ -34,7 +34,11 @@ func (s SessionRepo) Update(token string, t time.Time) error {
 }
 
 func (s SessionRepo) Insert(token, userName string, t time.Time) error {
-	return s.db.Insert(&model.Token{userName, token, t.Unix()})
+	return s.db.Insert(&model.Token{
+		Username:     userName,
+		Token:        token,
+		TimeAccessed: t.Unix(),
+	})
 }
 
 func (s SessionRepo) Remove(token string) error {

@@ -15,7 +15,7 @@ import (
 //This function registers a new document in the database with the new users data. It can return multiple types of error messages or at succesful registration session token.
 func (a *Accounts) Register(c *gin.Context) {
 	var userinfo model.User
-	c.BindJSON(&userinfo)
+	_ = c.BindJSON(&userinfo)
 	userinfo.Name = template.HTMLEscapeString(userinfo.Name)
 	userinfo.Username = template.HTMLEscapeString(userinfo.Username)
 	userinfo.Password = template.HTMLEscapeString(userinfo.Password)

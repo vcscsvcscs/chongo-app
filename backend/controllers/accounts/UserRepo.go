@@ -18,20 +18,12 @@ func NewUserRepo(db *mgo.Collection) UserRepo {
 
 func (u UserRepo) FindByEmail(email string, user *model.User) bool {
 	iter := u.db.Find(bson.M{"email": email}).Iter()
-	if !iter.Next(&user) {
-		return false
-	}
-
-	return true
+	return !iter.Next(&user)
 }
 
 func (u UserRepo) FindByUserName(userName string, user *model.User) bool {
 	iter := u.db.Find(bson.M{"username": userName}).Iter()
-	if !iter.Next(&user) {
-		return false
-	}
-
-	return true
+	return !iter.Next(&user)
 }
 
 func (u UserRepo) Update(userName string, t time.Time) error {

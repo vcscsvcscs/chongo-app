@@ -13,7 +13,7 @@ import (
 /*A dead simple Login api, which returns an error message or a session token, which is set by the session manager. */
 func (a *Accounts) Login(c *gin.Context) {
 	var userinfo model.User
-	c.BindJSON(&userinfo)
+	_ = c.BindJSON(&userinfo)
 	//log.Println()
 	userinfo.Email = template.HTMLEscapeString(userinfo.Email)
 	userinfo.Password = template.HTMLEscapeString(userinfo.Password)

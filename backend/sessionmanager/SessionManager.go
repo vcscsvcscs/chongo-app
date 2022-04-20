@@ -82,7 +82,7 @@ func (sm *SessionManager) IsSessionLegit(token string) (model.Token, bool) {
 	if !legit {
 		delete(sm.users, token)
 	} else {
-		sm.sessions.Update(token, sm.clock.Now())
+		_ = sm.sessions.Update(token, sm.clock.Now())
 		sm.online[sm.users[token]] = true
 	}
 	return profile, legit

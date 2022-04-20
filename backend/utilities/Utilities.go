@@ -18,7 +18,7 @@ func Exists(path string) bool {
 //Md 5 string hasher for quick use, this is not safe for passwords because md5, but it is absolutely fine for session tokens.
 func Md(str string) string {
 	h := md5.New()
-	io.WriteString(h, str)
+	_, _  = io.WriteString(h, str)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
