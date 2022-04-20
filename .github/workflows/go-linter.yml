@@ -3,7 +3,7 @@ name: Go linter
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   lint:
