@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { Link } from 'svelte-routing';
     import {mainsocket} from '../socketcom'
     import {UserLogedin} from '../Authenticate'
@@ -9,13 +9,16 @@
     import Pagetopbutton from "../components/Pagetopbutton.svelte"; 
     let switchmenu = "dashboard";
     onMount(()=>{
-        $mainsocket = {"token":(UserLogedin()?UserLogedin():"close"),"contents":[],"types":[]};
+        setInterval(() => {
+            mainsocket.set('authenticate',{"token":(UserLogedin()?UserLogedin():"close")});
+        }, 600000);
     });
-    mainsocket.subscribe(
-        (value) => {
-            console.log(value);
+    let unsubscribe = mainsocket.subscribe('error',(value) => {
+            alert(value);
+            sessionStorage.removeItem('sessiontoken');
         }
     );
+    onDestroy(unsubscribe);
 </script>
 
 <link rel="stylesheet" href="assets/css/styles.css" />

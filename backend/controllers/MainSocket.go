@@ -1,59 +1,51 @@
 package controllers
 
 import (
+	"encoding/json"
 	"log"
 
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
+	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
+	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
+
+	socketio "github.com/googollee/go-socket.io"
 )
 
-var upgrader = websocket.Upgrader{}
+var server *socketio.Server
 
-type reciever struct {
-	Token    string        `json:"token" bson:"token"`
-	Types    []string      `json:"types" bson:"types"`
-	Contents []interface{} `json:"contents" bson:"contents"`
-}
+func MainSocket(sm *sessionmanager.SessionManager) *socketio.Server {
+	server = socketio.NewServer(nil)
+	server.OnConnect("/", func(s socketio.Conn) error {
+		//s.SetContext("") //userdata and stuff
+		log.Println("connected:", s.ID())
+		return nil
+	})
+	server.OnEvent("/", "authenticate", func(s socketio.Conn, uinf string) {
+		var info Authenticationdata
+		json.Unmarshal([]byte(uinf), &info)
+		token, legit := sm.IsSessionLegit(info.Token)
+		if legit {
+			s.SetContext(token)
+		} else {
+			s.Emit("error", "This token is not Legit")
+		}
+	})
+	/*server.OnEvent("/", "update", func(s socketio.Conn, uinf string) string {
+		var info string
+		var update string
+		json.Unmarshal([]byte(uinf), &info)
+		toreturn, _ := json.Marshal(update)
+		return string(toreturn)
+	})*/
+	server.OnError("/", func(s socketio.Conn, e error) {
+		log.Println("Meet error:", e)
+	})
 
-func MainSocket(c *gin.Context) {
-	var data reciever
-	//var username string
-	//Upgrade get request to webSocket protocol
-	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
-	if err != nil {
-		log.Println("There was an error with this connection")
-		ws.Close()
-	}
-	defer ws.Close()
-	/////////////////////////////////////////////////////////////////////////////////
-	//On open
-	err = ws.ReadJSON(&data)
-	if err != nil {
-		//log.Println("error read json")
-		log.Println(&err)
-	}
-	/*if data.Token == "close" {
-		return
-	}*/
-	/////////////////////////////////////////////////////////////////////////////////
-	for {
-		err = ws.ReadJSON(data)
-		if err != nil {
-			//log.Println("error read json")
-			break
+	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
+		token, ok := s.Context().(model.Token)
+		if ok {
+			sm.DeleteSessionKey(token.Token)
 		}
-		for _, Trequest := range data.Types {
-			switch Trequest {
-			case "Chat":
-				///////
-			case "Quiz":
-				//////
-			case "":
-				///
-			}
-		}
-		if data.Token == "close" {
-			break
-		}
-	}
+		log.Println("closed", reason)
+	})
+	return server
 }

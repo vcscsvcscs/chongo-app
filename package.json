@@ -32,6 +32,6 @@
   "dependencies": {
     "bootstrap": "^5.1.3",
     "svelte-routing": "^1.6.0",
-    "svelte-websocket-store": "^1.1.23"
+    "svelte-socketio-store": "^0.0.2"
   }
 }

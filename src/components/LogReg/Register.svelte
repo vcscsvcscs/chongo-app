@@ -28,10 +28,7 @@
             alt="Logo of the chongo app family"
         />
         {#if errormsg != ""}
-            <p
-                id="Error"
-                style="color: rgb(242,11,11);display: none;font-size: 10px;"
-            >
+            <p id="Error" style="color: rgb(242,11,11);font-size: 10px;">
                 {errormsg}
             </p>
         {/if}

@@ -20,23 +20,23 @@ func (a *Accounts) Register(c *gin.Context) {
 	userinfo.Username = template.HTMLEscapeString(userinfo.Username)
 	userinfo.Password = template.HTMLEscapeString(userinfo.Password)
 	if !utilities.IsEmailValid(userinfo.Email) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusNotAcceptable, gin.H{
 			"message": "Email is not valid.",
 		})
 		c.Abort()
 		return
-	}
+	}  
 	userinfo.Email = template.HTMLEscapeString(userinfo.Email)
 	var user model.User
 	if a.db.FindByEmail(userinfo.Email, &user) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusNotAcceptable, gin.H{
 			"message": "There is already a user with this email.",
 		})
 		c.Abort()
 		return
 	}
 	if a.db.FindByUserName(userinfo.Username, &user) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusNotAcceptable, gin.H{
 			"message": "There is already a user with this username.",
 		})
 		c.Abort()
@@ -45,7 +45,7 @@ func (a *Accounts) Register(c *gin.Context) {
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(userinfo.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusNotAcceptable, gin.H{
 			"message": "This password is not supported.",
 		})
 		log.Println(err)

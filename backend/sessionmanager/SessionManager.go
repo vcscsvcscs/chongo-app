@@ -2,9 +2,10 @@ package sessionmanager
 
 import (
 	"fmt"
-	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
 	"log"
 	"time"
+
+	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/model"
 
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"gopkg.in/mgo.v2"
