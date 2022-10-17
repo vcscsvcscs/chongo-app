@@ -1,6 +1,9 @@
 package accounts
 
 import (
+	"testing"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	mocks2 "github.com/vcscsvcscs/chongo-app/backend/controllers/accounts/mocks"
@@ -8,8 +11,6 @@ import (
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager/mocks"
 	utilMocks "github.com/vcscsvcscs/chongo-app/backend/utilities/mocks"
-	"testing"
-	"time"
 )
 
 //go:generate mockgen -source=Accounts.go -destination=./mocks/interfaces.go -package=mocks

@@ -17,6 +17,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers"
 	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/quiz"
 	"github.com/vcscsvcscs/chongo-app/backend/sessionmanager"
 	"github.com/vcscsvcscs/chongo-app/backend/utilities"
 	"gopkg.in/mgo.v2"
@@ -62,7 +63,9 @@ func main() {
 	sessionManager := sessionmanager.InitSessions(15, MongoDB, "chongo", "sessions", utilities.NormalClock{})
 
 	userRepo := accounts.NewUserRepo(MongoDB.DB("chongo").C("users"))
-	controllers.InitCredentials(userRepo)
+	resultsRepo := quiz.NewResultsRepo(MongoDB.DB("chongo").C("results"))
+	quizRepo := quiz.NewQuizRepo(MongoDB.DB("chongo").C("quiz"))
+	controllers.InitCredentials(userRepo, quizRepo, resultsRepo)
 	//Router and endpoints
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))

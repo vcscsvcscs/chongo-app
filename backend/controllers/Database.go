@@ -5,15 +5,20 @@ import (
 	"time"
 
 	"github.com/vcscsvcscs/chongo-app/backend/controllers/accounts"
+	"github.com/vcscsvcscs/chongo-app/backend/controllers/quiz"
 )
 
 type Database struct {
-	users accounts.UsersDB
+	users   accounts.UsersDB
+	quiz    quiz.QuizDB
+	results quiz.ResultsDB
 }
 
-func InitCredentials(usersDB accounts.UsersDB) Database {
+func InitCredentials(usersDB accounts.UsersDB, quizDB quiz.QuizDB, resultDB quiz.ResultsDB) Database {
 	db := Database{
-		users: usersDB,
+		users:   usersDB,
+		quiz:    quizDB,
+		results: resultDB,
 	}
 
 	go db.AccountDeleteCollector()
