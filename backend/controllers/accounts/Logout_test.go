@@ -50,4 +50,9 @@ func TestAccounts_Logout(t *testing.T) {
 		assert.Equal(t, http.StatusOK, wr.Code)
 		assert.Equal(t, "{\"message\":\"User Sign out successfully\"}", wr.Body.String())
 	})
+	
+	t.Run("test test for checking codecov", func(t *testing.T) {
+		assert.Equal(t, true, true)
+
+	})
 }
